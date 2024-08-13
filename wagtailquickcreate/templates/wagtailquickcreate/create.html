@@ -6,13 +6,15 @@
 
 {% block content %}
     <header class="w-header w-header--merged">
-        <div class="row row-flush">
-            <div class="col">
-                <h1 class="w-header__title">
-                    <img src="{% avatar_url user %}" alt="" class="avatar"/>
-                    Add {{ model_verbose_name }}
-                </h1>
-                <h2>{{ user.get_full_name|default:user.get_username }}</h2>
+        <div class="row">
+            <div class="left">
+                <div class="col">
+                    <h1 class="w-header__title" id="header-title">
+                        <div class="avatar"><img src="{% avatar_url user %}" alt="" /></div>
+                        Add {{ model_verbose_name }}
+                        <span class="w-header__subtitle">{{ user.get_full_name|default:user.get_username }}</span>
+                    </h1>
+                </div>
             </div>
         </div>
     </header>
@@ -28,7 +30,8 @@
 
             {% for page in parent_pages %}
                 <li>
-                    <a href="/admin/pages/add/{{model_app|lower}}/{{page.model|lower}}/{{page.id}}/" class="icon icon-plus-inverse icon-larger">
+                    <a href="/admin/pages/add/{{model_app|lower}}/{{page.model|lower}}/{{page.id}}/">
+                        {% icon name="plus-inverse" classname="default w-mr-1 w-align-middle" %}
                         {% for parent in page.ancestors %}
                             {% if not parent.is_root %}
                                 {{ parent }} >
