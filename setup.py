@@ -41,5 +41,6 @@ setup(
         'Framework :: Wagtail',
         'Framework :: Wagtail :: 4',
         'Framework :: Wagtail :: 5',
+        'Framework :: Wagtail :: 6',
     ],
 )
