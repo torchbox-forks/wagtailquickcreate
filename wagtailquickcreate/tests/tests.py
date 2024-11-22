@@ -46,10 +46,22 @@ class WagtailQuickCreateTests(TestCase, WagtailTestUtils):
         self.assertTrue(buttons[2].text.strip() == 'Document')
         self.assertTrue(buttons[2]['href'] == '/admin/documents/')
 
+    def test_quickcreate_index_page_title(self):
+        response = self.client.get('/admin/quickcreate/create/standardpages/informationpage/')
+        soup = BeautifulSoup(response.content, 'html.parser')
+        title = soup.find('h1')
+        self.assertTrue(title.text.strip() == 'Add Information page')
+
     def test_first_level_index_page_in_shortcut_view(self):
         response = self.client.get('/admin/quickcreate/create/standardpages/informationpage/')
-        self.assertContains(response, 'Home > <strong>Section 1</strong>', html=True)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        parent_link = soup.find('a', href='/admin/pages/add/standardpages/informationpage/3/')
+        self.assertIsNotNone(parent_link)
+        self.assertTrue(parent_link.text.replace('\n', ''), 'Home > <strong>Section 1</strong>')
 
     def test_second_level_index_in_shortcut_view(self):
         response = self.client.get('/admin/quickcreate/create/standardpages/informationpage/')
-        self.assertContains(response, 'Home > Section 1 > <strong>Section 2</strong>', html=True)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        parent_link = soup.find('a', href='/admin/pages/add/standardpages/informationpage/4/')
+        self.assertIsNotNone(parent_link)
+        self.assertTrue(parent_link.text.replace('\n', ''), 'Home > Section 1 > <strong>Section 2</strong>')
