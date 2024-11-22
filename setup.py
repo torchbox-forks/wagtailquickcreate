@@ -28,6 +28,11 @@ setup(
     install_requires=[
         'wagtail>=4.1',
     ],
+    extras_require={
+        'testing': [
+            'beautifulsoup4',
+        ],
+    },
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
