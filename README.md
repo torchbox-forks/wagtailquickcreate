@@ -46,6 +46,14 @@ WAGTAIL_QUICK_CREATE_DOCUMENTS = True
 WAGTAIL_QUICK_CREATE_IMAGES = True
 ```
 
+### Customising the panel
+
+The panel is not collapsed by default, but you can collapse it by adding the following to your settings:
+
+```python
+WAGTAIL_QUICK_CREATE_INITIAL_COLLAPSED = True
+```
+
 ## Compatibility
 
 This package is compatible with Wagtail 6.3 and above.
