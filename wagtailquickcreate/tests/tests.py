@@ -1,3 +1,5 @@
+from bs4 import BeautifulSoup
+
 from django.test import TestCase
 from django.urls import reverse
 
@@ -33,9 +35,16 @@ class WagtailQuickCreateTests(TestCase, WagtailTestUtils):
 
     def test_quickcreate_panel_links(self):
         response = self.client.get('/admin/')
-        self.assertTrue('Add Image' in str(response.content))
-        self.assertTrue('Add Document' in str(response.content))
-        self.assertTrue('Add Information page' in str(response.content))
+        soup = BeautifulSoup(response.content, 'html.parser')
+        quick_create_content = soup.find('div', id='quickcreate-content')
+        buttons = quick_create_content.find_all('a')
+        self.assertTrue(len(buttons) == 3)
+        self.assertTrue(buttons[0].text.strip() == 'Information page')
+        self.assertTrue(buttons[0]['href'] == '/admin/quickcreate/create/standardpages/InformationPage/')
+        self.assertTrue(buttons[1].text.strip() == 'Image')
+        self.assertTrue(buttons[1]['href'] == '/admin/images/')
+        self.assertTrue(buttons[2].text.strip() == 'Document')
+        self.assertTrue(buttons[2]['href'] == '/admin/documents/')
 
     def test_first_level_index_page_in_shortcut_view(self):
         response = self.client.get('/admin/quickcreate/create/standardpages/informationpage/')
