@@ -12,12 +12,11 @@ jobs:
     strategy:
       matrix:
         python: ["3.9", "3.10", "3.11", "3.12", "3.13"]
-        wagtail: ["wagtail>=6.3,<6.4"]
-        django: [
-          "Django>=4.2,<4.3",
-          "Django>=5.0,<5.1",
-          "Django>=5.1,<6.2",
-        ]
+        wagtail: ["wagtail==6.3"]
+        django: ["djagno==4.2", "django==5.0", "django==5.1"]
+        exclude:
+          - python: "3.9"
+            django: ["django==5.0", "django==5.1"]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
